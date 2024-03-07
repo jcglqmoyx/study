@@ -12,8 +12,10 @@ pub async fn register(content: String, wechat_id: String, rb: &RBatis) -> String
     let username: String = content.chars().skip(REGISTRATION_COMMAND.len()).take(content.len() - REGISTRATION_COMMAND.len()).collect();
     let mut tx = rb.acquire_begin().await.unwrap();
     if !user::query::find_by_wechat_id_via_tx(&tx, &wechat_id).await.is_none() {
+        tx.commit().await.unwrap();
         String::from("您已经注册过账号，请勿重复注册")
     } else if !user::query::find_by_username(&tx, username.clone()).await.is_none() {
+        tx.commit().await.unwrap();
         String::from("该用户名已经被占用，请换一个用户名")
     } else {
         let mut user = User::new(username.clone(), wechat_id);
