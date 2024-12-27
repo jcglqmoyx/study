@@ -31,7 +31,7 @@ c frequency: 修改打卡规则，在前frequency天内打过卡就算完成了�
 ## 2. 后台配置
 
 后台程序每天0点会进行打卡情况统计，并将统计结果上传到远程git仓库, 远程git仓库的名称和URL在src/global/git.rs中,
-编译项目前应先建好自己的远程git仓库，并将服务器的SSH key在远程git仓库的托管平台配置好，保证服务器能将打卡统计结果push到远程仓库中。
+编译项目前应先建好自己的远程git仓库，服务器上配置好git的user.name和user.email, 并将服务器的SSH key在远程git仓库的托管平台配置好，保证服务器能将打卡统计结果push到远程仓库中。
 
 ```rust
 // src/global/git.rs
